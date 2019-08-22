@@ -1,0 +1,73 @@
+Title,Title
+Image,Image
+"WYSIWYG Editor","WYSIWYG Editor"
+"Attention Seekers","Attention Seekers"
+"Bouncing Entrances","Bouncing Entrances"
+"Bouncing Exits","Bouncing Exits"
+"Fading Entrances","Fading Entrances"
+"Fading Exits","Fading Exits"
+Flippers,Flippers
+Lightspeed,Lightspeed
+"Rotating Entrances","Rotating Entrances"
+"Rotating Exits","Rotating Exits"
+"Sliding Exits","Sliding Exits"
+"Zoom Entrances","Zoom Entrances"
+"Zoom Exits","Zoom Exits"
+Specials,Specials
+Disable,Disable
+Fade,Fade
+"Back Slide","Back Slide"
+"Go Down","Go Down"
+"Fade Up","Fade Up"
+Previous,Previous
+Next,Next
+"Ves Image Slider","Ves Image Slider"
+"Addition Class","Addition Class"
+"OWL Carousel Settings","OWL Carousel Settings"
+animateIn,animateIn
+animateOut,animateOut
+Preview,Preview
+"Auto Height","Auto Height"
+Autoplay,Autoplay
+"Autoplay Timeout","Autoplay Timeout"
+"Autoplay Speed","Autoplay Speed"
+"Navigation Speed","Navigation Speed"
+"Dots Speed","Dots Speed"
+"Pause On Hover","Pause On Hover"
+"Show dots navigations","Show dots navigations"
+"Show next/prev buttons.","Show next/prev buttons."
+"Enable Custom Nav","Enable Custom Nav"
+"Next Icon Class","Next Icon Class"
+"Previous Icon Class","Previous Icon Class"
+"RTL Layout","RTL Layout"
+Loop,Loop
+"Infinity loop. Duplicate last and first items to get loop illusion.","Infinity loop. Duplicate last and first items to get loop illusion."
+"Lazy Load","Lazy Load"
+"Lazy load images. data-src and data-src-retina for highres. Also load images into background inline style if element is not <img>","Lazy load images. data-src and data-src-retina for highres. Also load images into background inline style if element is not <img>"
+"Touch Drag","Touch Drag"
+"Touch drag enabled.","Touch drag enabled."
+"Mouse Drag","Mouse Drag"
+"Mouse drag enabled.","Mouse drag enabled."
+"Pull Drag","Pull Drag"
+"Stage pull to edge.","Stage pull to edge."
+"Slide Manage","Slide Manage"
+"Select CMS Static block 1","Select CMS Static block 1"
+"Content 1","Content 1"
+"Select CMS Static block 2","Select CMS Static block 2"
+"Content 2","Content 2"
+"Select CMS Static block 3","Select CMS Static block 3"
+"Content 3","Content 3"
+"Select CMS Static block 4","Select CMS Static block 4"
+"Content 4","Content 4"
+"Select CMS Static block 5","Select CMS Static block 5"
+"Content 5","Content 5"
+"Select CMS Static block 6","Select CMS Static block 6"
+"Content 6","Content 6"
+"Select CMS Static block 7","Select CMS Static block 7"
+"Content 7","Content 7"
+"Select CMS Static block 8","Select CMS Static block 8"
+"Content 8","Content 8"
+"Select CMS Static block 9","Select CMS Static block 9"
+"Content 9","Content 9"
+"Select CMS Static block 10","Select CMS Static block 10"
+"Content 10","Content 10"

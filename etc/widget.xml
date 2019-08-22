@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<?php
+/**
+ * Venustheme
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Venustheme.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.venustheme.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Venustheme
+ * @package    Ves_ImageSlider
+ * @copyright  Copyright (c) 2014 Venustheme (http://www.venustheme.com/)
+ * @license    http://www.venustheme.com/LICENSE-1.0.html
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+	<widget id="ves_imageslider" class="Ves\ImageSlider\Block\Widget\Sliders">
+		<label translate="true">Ves Image Slider</label>
+		<description translate="true">Generate Simple Image Slider</description>
+		<parameters>
+			<parameter name="title" xsi:type="text" visible="true">
+				<label translate="true">Title</label>
+				<description translate="true"><![CDATA[Input the widget title. Empty for hide]]></description>
+			</parameter>
+			<parameter name="addition_class" xsi:type="text" visible="true">
+				<label translate="true">Addition Class</label>
+				<description translate="true"><![CDATA[Input widget wrapper prefix css class]]></description>
+			</parameter>
+			<parameter name="owlsettings_heading" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\System\Config\Form\Field\Heading">
+				<label translate="true">OWL Carousel Settings</label>
+			</parameter>
+			<parameter name="animatein" xsi:type="select"  visible="true" source_model="Ves\ImageSlider\Model\Config\Source\AnimateCssIn">
+				<label translate="true">animateIn</label>
+				<description translate="true"><![CDATA[Choose effect when start the slide]]></description>
+			</parameter>
+			<parameter name="animateout" xsi:type="select"  visible="true" source_model="Ves\ImageSlider\Model\Config\Source\AnimateCssOut">
+				<label translate="true">animateOut</label>
+				<description translate="true"><![CDATA[Choose effect when end the slide]]></description>
+			</parameter>
+			<parameter name="animatecss_preview" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\System\Config\Form\Field\AnimateCssPreview">
+				<label translate="true">Preview</label>
+			</parameter>
+			<parameter name="autoheight" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Auto Height</label>
+				<description translate="true"><![CDATA[Default: No]]></description>
+			</parameter>
+			<parameter name="autoplay" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Autoplay</label>
+				<description translate="true"><![CDATA[Enable/Disable autoplay for the slider]]></description>
+			</parameter>
+			<parameter name="autoplay_timeout" xsi:type="text" visible="true">
+				<label translate="true">Autoplay Timeout</label>
+				<description translate="true"><![CDATA[Default: 3000]]></description>
+				<depends><parameter name="autoplay" value="1" /></depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="autoplay_speed" xsi:type="text" visible="true">
+				<label translate="true">Autoplay Speed</label>
+				<description translate="true"><![CDATA[Default: 3000]]></description>
+				<depends><parameter name="autoplay" value="1" /></depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="nav_speed" xsi:type="text" visible="true">
+				<label translate="true">Navigation Speed</label>
+				<description translate="true"><![CDATA[Default: 800]]></description>
+				<value>800</value>
+			</parameter>
+			<parameter name="dots_speed" xsi:type="text" visible="true">
+				<label translate="true">Dots Speed</label>
+				<description translate="true"><![CDATA[Default: 800]]></description>
+				<value>800</value>
+			</parameter>
+			<parameter name="autoplay_hover" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Pause On Hover</label>
+				<depends><parameter name="autoplay" value="1" /></depends>
+			</parameter>
+			<parameter name="dots" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Show dots navigations</label>
+			</parameter>
+			<parameter name="nav" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Show next/prev buttons.</label>
+			</parameter>
+			<parameter name="enable_custom_nav" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Enable Custom Nav</label>
+			</parameter>
+			<parameter name="next_icon_class" xsi:type="text"  visible="true">
+				<label translate="true">Next Icon Class</label>
+				<depends><parameter name="enable_custom_nav" value="1" /></depends>
+				<value>fa fa-angle-right</value>
+			</parameter>
+			<parameter name="previous_icon_class" xsi:type="text"  visible="true">
+				<label translate="true">Previous Icon Class</label>
+				<depends><parameter name="enable_custom_nav" value="1" /></depends>
+				<value>fa fa-angle-left</value>
+			</parameter>
+			<parameter name="rtl" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">RTL Layout</label>
+				<description translate="true"><![CDATA[Default: No]]></description>
+			</parameter>
+			<parameter name="loop" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Loop</label>
+				<description translate="true"><![CDATA[Infinity loop. Duplicate last and first items to get loop illusion.]]></description>
+			</parameter>
+			<parameter name="lazyload" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Lazy Load</label>
+				<description translate="true"><![CDATA[Lazy load images. data-src and data-src-retina for highres. Also load images into background inline style if element is not img]]></description>
+			</parameter>
+			<parameter name="touchdrag" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Touch Drag</label>
+				<description translate="true"><![CDATA[Touch drag enabled. Default: Yes]]></description>
+			</parameter>
+			<parameter name="mousedrag" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Mouse Drag</label>
+				<description translate="true"><![CDATA[Mouse drag enabled. Default: Yes]]></description>
+			</parameter>
+			<parameter name="pulldrag" xsi:type="select"  visible="true" source_model="Magento\Config\Model\Config\Source\Yesno">
+				<label translate="true">Pull Drag</label>
+				<description translate="true"><![CDATA[Stage pull to edge. Default: Yes]]></description>
+			</parameter>
+
+			<parameter name="slidemanage_heading" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\System\Config\Form\Field\Heading">
+				<label translate="true">Slide Manage</label>
+			</parameter>
+			<parameter name="block_1" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 1</label>
+			</parameter>
+			<parameter name="html_1" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 1</label>
+			</parameter>
+			<parameter name="block_2" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 2</label>
+			</parameter>
+			<parameter name="html_2" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 2</label>
+			</parameter>
+			<parameter name="block_3" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 3</label>
+			</parameter>
+			<parameter name="html_3" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 3</label>
+			</parameter>
+			<parameter name="block_4" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 4</label>
+			</parameter>
+			<parameter name="html_4" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 4</label>
+			</parameter>
+			<parameter name="block_5" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 5</label>
+			</parameter>
+			<parameter name="html_5" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 5</label>
+			</parameter>
+			<parameter name="block_6" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 6</label>
+			</parameter>
+			<parameter name="html_6" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 6</label>
+			</parameter>
+			<parameter name="block_7" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 7</label>
+			</parameter>
+			<parameter name="html_7" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 7</label>
+			</parameter>
+			<parameter name="block_8" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 8</label>
+			</parameter>
+			<parameter name="html_8" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 8</label>
+			</parameter>
+			<parameter name="block_9" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 9</label>
+			</parameter>
+			<parameter name="html_9" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 9</label>
+			</parameter>
+			<parameter name="block_10" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 10</label>
+			</parameter>
+			<parameter name="html_10" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 10</label>
+			</parameter>
+			<parameter name="block_11" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 11</label>
+			</parameter>
+			<parameter name="html_11" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 11</label>
+			</parameter>
+			<parameter name="block_12" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 12</label>
+			</parameter>
+			<parameter name="html_12" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 12</label>
+			</parameter>
+			<parameter name="block_13" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 13</label>
+			</parameter>
+			<parameter name="html_13" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 13</label>
+			</parameter>
+			<parameter name="block_14" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 14</label>
+			</parameter>
+			<parameter name="html_14" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 14</label>
+			</parameter>
+			<parameter name="block_15" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 15</label>
+			</parameter>
+			<parameter name="html_15" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 15</label>
+			</parameter>
+			<parameter name="block_16" xsi:type="select" visible="true" source_model="Ves\ImageSlider\Model\Config\Source\Staticblock">
+				<label translate="true">Select CMS Static block 16</label>
+			</parameter>
+			<parameter name="html_16" xsi:type="conditions" visible="true" class="Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field\WysiwygEditor">
+				<label translate="true">Content 16</label>
+			</parameter>
+
+		</parameters>
+	</widget>
+</widgets>

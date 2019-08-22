@@ -1,0 +1,11 @@
+.imageslider-widget {
+	text-align: center;
+}
+.imageslider-widget ul {
+	padding: 0;
+}
+.imageslider-widget {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}

@@ -1,0 +1,90 @@
+<script type="text/javascript">
+	require([
+		'jquery',
+		<?php if($this->helper("Ves\All\Helper\Data")->getConfig("enable_owlcarousel")): ?>
+		"Ves_All/lib/owl.carousel/owl.carousel.min",
+	<?php endif; ?>
+	], function () {
+		jQuery(document).ready(function($) {
+			if(jQuery(".image-slider-owl").length > 0 ) {
+				var owlItems = [];
+				jQuery(".image-slider-owl").each( function(){
+					var owlCarousel = jQuery(this).find(".owl-carousel");
+					var owlId = jQuery(owlCarousel).attr("id"); 
+					jQuery(this).addClass("hasOwl");
+					var config = [];
+					owlItems[jQuery(owlCarousel).attr("id")] = true;
+					if(jQuery(owlCarousel).data('animatein')){
+						config['animateIn'] = jQuery(owlCarousel).data('animatein');
+					}
+					if(jQuery(owlCarousel).data('animateout')){
+						config['animateOut'] = jQuery(owlCarousel).data('animateout');
+					}
+					if(jQuery(owlCarousel).data('nav')){
+						config['nav'] = jQuery(owlCarousel).data('nav');
+					}
+					if(typeof(jQuery(owlCarousel).data('dot'))!=='undefined'){
+	                    config['dots'] = jQuery(owlCarousel).data('dot');
+	                }else{
+	                    config['dots'] = false;
+	                }
+					if(jQuery(owlCarousel).data('autoplay')){
+						config['autoplay'] = jQuery(owlCarousel).data('autoplay');
+					}
+					if(jQuery(owlCarousel).data('autoplay-timeout')){
+						config['autoplayTimeout'] = jQuery(owlCarousel).data('autoplay-timeout');
+					}
+					if(jQuery(owlCarousel).data('autoplay-speed')){
+						config['autoplaySpeed'] = jQuery(owlCarousel).data('autoplay-speed');
+					}
+					if(jQuery(owlCarousel).data('autoplay-pauonhover')){
+						config['autoplayHoverPause'] = jQuery(owlCarousel).data('autoplay-pauonhover');
+					}
+					if(jQuery(owlCarousel).data('rtl')){
+						config['rtl'] = jQuery(owlCarousel).data('rtl');
+					}
+					if(jQuery(owlCarousel).data('items')){
+						
+						config['items'] = jQuery(owlCarousel).data('items');
+					}
+					if(jQuery(owlCarousel).data('loop')){
+						config['loop'] = jQuery(owlCarousel).data('loop');
+					}
+					if(jQuery(owlCarousel).data('mousedrag')){
+						config['mouseDrag'] = jQuery(owlCarousel).data('mousedrag');
+					}
+					if(jQuery(owlCarousel).data('pulldrag')){
+						config['pullDrag'] = jQuery(owlCarousel).data('pulldrag');
+					}
+					if(jQuery(owlCarousel).data('freedrag')){
+						config['freeDrag'] = jQuery(owlCarousel).data('freedrag');
+					}
+					if(jQuery(owlCarousel).data('stagepadding')){
+						config['stagePadding'] = jQuery(owlCarousel).data('stagepadding');
+					}
+					if(jQuery(owlCarousel).data('lazyload')){
+						config['lazyLoad'] = jQuery(owlCarousel).data('lazyload');
+					}  
+					if(jQuery(owlCarousel).data('navspeed')){
+						config['navSpeed'] = jQuery(owlCarousel).data('navspeed');
+					} 
+					if(jQuery(owlCarousel).data('dotsspeed')){
+						config['dotsSpeed'] = jQuery(owlCarousel).data('dotsspeed');
+					}
+
+					jQuery('#'+owlId).owlCarousel(config);
+					jQuery(".owl-left").click(function(){
+						var owlCarousel = jQuery("#"+jQuery(this).data("owlid"));
+						owlCarousel.trigger('prev.owl.carousel');
+						return false;
+					});
+					jQuery(".owl-right").click(function(){
+						var owlCarousel = jQuery("#"+jQuery(this).data("owlid"));
+						owlCarousel.trigger('next.owl.carousel');
+						return false;
+					}); 
+			});
+			}
+		});
+	});
+</script>

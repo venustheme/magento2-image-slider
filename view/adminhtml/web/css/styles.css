@@ -1,0 +1,12 @@
+/*#html-body .clearlooks2{
+	z-index: 1100 !important
+}
+#catalog-wysiwyg-editor.popup-window.dialog{
+	z-index: 1000 !important;
+}
+.modal-slide.magento._show{
+	z-index: 12000 !important;
+}*/ 
+div#catalog-wysiwyg-editor {
+    z-index: 10013!important;
+}
