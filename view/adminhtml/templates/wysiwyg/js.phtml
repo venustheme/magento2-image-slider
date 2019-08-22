@@ -10,7 +10,7 @@
 <script>
 require([
     "jquery",
-    "tinymce",
+    "wysiwygAdapter",
     "prototype",
     "mage/adminhtml/events"
 ], function(jQuery, tinyMCE){
@@ -46,7 +46,7 @@ var imagesliderWysiwygEditor = {
         this.overlayHideEffectOptions = Windows.overlayHideEffectOptions;
         Windows.overlayShowEffectOptions = {duration:0};
         Windows.overlayHideEffectOptions = {duration:0};
-        tinyMCE.editors[elementId].save();
+        tinyMCE.get(elementId).save();
         Dialog.confirm(content, {
             draggable:true,
             resizable:true,
@@ -73,7 +73,7 @@ var imagesliderWysiwygEditor = {
     okDialogWindow : function(dialogWindow) {
         if (dialogWindow.options.firedElementId) {
             wysiwygObj = eval('wysiwyg'+dialogWindow.options.firedElementId+'_editor');
-            wysiwygObj.turnOff();
+            wysiwygObj.toggle();
             if (tinyMCE.get(wysiwygObj.id)) {
                 $(dialogWindow.options.firedElementId).value = tinyMCE.get(wysiwygObj.id).getContent();
             } else {
@@ -81,7 +81,7 @@ var imagesliderWysiwygEditor = {
                     $(dialogWindow.options.firedElementId).value = $(dialogWindow.options.firedElementId+'_editor').value;
                 }
             }
-            tinyMCE.editors[dialogWindow.options.firedElementId].load();
+            tinyMCE.get(dialogWindow.options.firedElementId).load();
         }
         this.closeDialogWindow(dialogWindow);
     },

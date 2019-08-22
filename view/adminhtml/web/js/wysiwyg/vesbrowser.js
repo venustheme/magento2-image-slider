@@ -5,7 +5,7 @@
 /*jshint browser:true jquery:true*/
 define([
     "jquery",
-    "tinymce",
+    "wysiwygAdapter",
     "Magento_Ui/js/modal/prompt",
     "Magento_Ui/js/modal/confirm",
     "Magento_Ui/js/modal/alert",

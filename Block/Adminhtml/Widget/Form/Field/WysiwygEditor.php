@@ -18,11 +18,12 @@
  * @copyright  Copyright (c) 2014 Venustheme (http://www.venustheme.com/)
  * @license    http://www.venustheme.com/LICENSE-1.0.html
  */
-namespace Ves\ImageSlider\Block\Adminhtml\Widget\Form\Field;
+namespace Ves\BaseWidget\Block\Adminhtml\Widget\Form\Field;
 
 use Magento\Backend\Block\Template;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\Data\Form\Element\Renderer\RendererInterface;
+use Magento\Framework\Escaper;
 
 class WysiwygEditor extends Template implements RendererInterface
 {
@@ -38,6 +39,16 @@ class WysiwygEditor extends Template implements RendererInterface
     protected $_factoryElement;
 
     /**
+     * @var \Magento\Framework\Escaper
+     */
+    protected $_escaper;
+
+    /**
+     * @var \Magento\Framework\View\LayoutInterface
+     */
+    protected $_layout;
+
+    /**
      * Adminhtml data
      *
      * @var \Magento\Backend\Helper\Data
@@ -49,8 +60,10 @@ class WysiwygEditor extends Template implements RendererInterface
     /**
      * @param \Magento\Backend\Block\Template\Context                $context           
      * @param \Magento\Framework\Data\Form\Element\Factory           $factoryElement    
-     * @param \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection            
-     * @param \Magento\Cms\Model\Wysiwyg\Config                      $wysiwygConfig          
+     * @param \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection 
+     * @param Escaper                                                $escaper           
+     * @param \Magento\Cms\Model\Wysiwyg\Config                      $wysiwygConfig     
+     * @param \Magento\Framework\View\LayoutInterface                $layout            
      * @param \Magento\Backend\Helper\Data                           $backendData       
      */
     public function __construct(
@@ -58,19 +71,18 @@ class WysiwygEditor extends Template implements RendererInterface
         \Magento\Framework\Data\Form\Element\Factory $factoryElement,
         \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection,
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
+        /*\Magento\Framework\View\LayoutInterface $layout,*/
         \Magento\Backend\Helper\Data $backendData
         ){
         $this->_factoryElement = $factoryElement;
         $this->_factoryCollection = $factoryCollection;
+        /*$this->_layout = $layout;*/
         $this->_backendData = $backendData;
         $this->_wysiwygConfig = $wysiwygConfig;
         parent::__construct($context);
     }
     public function isBase64Encoded($data) {
         if(base64_encode($data) === $data) return false;
-        if(base64_encode(base64_decode($data)) === $data){
-            return true;
-        }
         if (!preg_match('~[^0-9a-zA-Z+/=]~', $data)) {
             $check = str_split(base64_decode($data));
             $x = 0;
@@ -90,24 +102,29 @@ class WysiwygEditor extends Template implements RendererInterface
         return false;
     }
     public function render(AbstractElement $element){
+
         $html = '';
         $config = $this->_wysiwygConfig->getConfig();
+
         $element_id = $element->getHtmlId().rand().time();
         $this->element_id = $element_id;
+
         $config['height'] = '300px';
         $config = json_encode($config->getData());
 
         $value = $element->getValue();
         if(!is_array($value)){
-            $value2 = str_replace(" ","+", $value);
-            if($this->isBase64Encoded($value2)){
-                $value = base64_decode($value2);
+            $value = str_replace(" ","+", $value);
+            if($this->isBase64Encoded($value)){
+                $value = base64_decode($value);
                 
                 if($this->isBase64Encoded($value)){
                     $value = base64_decode($value);
                 }
             }
         }
+
+        #return $value;
 
         $class = '';
         if($element->getRequired()){
@@ -118,17 +135,17 @@ class WysiwygEditor extends Template implements RendererInterface
         $html .= $element->getLabelHtml();
 
         $html .= '<div class="admin__field-control control">';
-        $html .= '<textarea id="' . $element_id . '" name="' . $element->getName() . '" class="textarea admin__control-textarea wysiwyg-editor ' . $class . '" rows="5" cols="15" data-ui-id="product-tabs-attributes-tab-fieldset-element-textarea-' . $element->getName() . '" aria-hidden="true">'.$value.'</textarea>';
+        $html .= '<textarea id="' . $element_id . '" name="' . $element->getName() . '" class="textarea admin__control-textarea wysiwyg-editor ' . $class . '" rows="5" cols="15" data-ui-id="product-tabs-attributes-tab-fieldset-element-textarea-' . $element->getName() . '" aria-hidden="true">'.$this->getEscapedValue($value).'</textarea>';
   
-            $html .= $this->getLayout()->createBlock(
+            $html .= $this->_layout->createBlock(
                 'Magento\Backend\Block\Widget\Button',
                 '',
                 [
                     'data' => [
                         'label' => __('WYSIWYG Editor'),
                         'type' => 'button',
-                        'class' => 'action-wysiwyg hidden',
-                        'onclick' => 'imagesliderWysiwygEditor.open(\'' . $this->_backendData->getUrl(
+                        'class' => 'action-wysiwyg',
+                        'onclick' => 'basewidgetWysiwygEditor.open(\'' . $this->_backendData->getUrl(
                             'catalog/product/wysiwyg'
                         ) . '\', \'' . $element_id . '\')',
                     ]
@@ -143,7 +160,7 @@ class WysiwygEditor extends Template implements RendererInterface
                 "jquery",
                 "mage/translate", 
                 "mage/adminhtml/events",
-                "Ves_ImageSlider/js/wysiwyg/tiny_mce/setup",
+                "mage/adminhtml/wysiwyg/tiny_mce/setup",
                 "mage/adminhtml/wysiwyg/widget"
             ], function(jQuery){
             var config = $config,
@@ -159,7 +176,7 @@ class WysiwygEditor extends Template implements RendererInterface
                 }
             });
 
-            editor{$element_id} = new vesSliderTinyMceWysiwygSetup(
+            editor{$element_id} = new wysiwygSetup(
                 '{$element_id}',
                 config
             );
@@ -167,16 +184,14 @@ class WysiwygEditor extends Template implements RendererInterface
             editorFormValidationHandler = editor{$element_id}.onFormValidation.bind(editor{$element_id});
 
             Event.observe("toggle{$element_id}", "click", editor{$element_id}.toggle.bind(editor{$element_id}));
+                varienGlobalEvents.attachEventHandler("formSubmit", editorFormValidationHandler);
+                varienGlobalEvents.clearEventHandlers("open_browser_callback");
+                varienGlobalEvents.attachEventHandler("open_browser_callback", editor{$element_id}.openFileBrowser);
 
-            Event.observe("toggle{$element_id}", "click", function(){jQuery("#toggle{$element_id}").toggleClass("texteditor-enabled"); jQuery("#toggle{$element_id}").parent().find(".action-wysiwyg").toggleClass("hidden");});
-
-            varienGlobalEvents.attachEventHandler("formSubmit", editorFormValidationHandler);
+            //editor{$element_id}.turnOn();
             varienGlobalEvents.clearEventHandlers("open_browser_callback");
             varienGlobalEvents.attachEventHandler("open_browser_callback", editor{$element_id}.openFileBrowser);
-
-            varienGlobalEvents.clearEventHandlers("open_browser_callback");
-            varienGlobalEvents.attachEventHandler("open_browser_callback", editor{$element_id}.openFileBrowser);
-
+            
             jQuery('#{$element_id}')
                 .addClass('wysiwyg-editor')
                 .data(
