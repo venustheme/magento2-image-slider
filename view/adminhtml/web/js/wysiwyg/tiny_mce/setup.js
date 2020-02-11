@@ -5,7 +5,7 @@
 define([
     'jquery',
     'underscore',
-    'tinymce',
+    'wysiwygAdapter',
     'mage/translate',
     'prototype',
     'mage/adminhtml/events',
